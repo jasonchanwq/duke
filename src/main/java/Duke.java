@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Duke {
@@ -16,13 +18,28 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
         Scanner scanner;
         String clone = "";
+
+        List<String> EntryList = new ArrayList<String>(); //create list
+
         while(!clone.equals("bye"))
         {
             scanner = new Scanner(System.in);
             clone = scanner.next();
-            if(!clone.equals("bye")) {
+            EntryList.add(clone);
+
+            if(clone.equals("list"))
+            {
                 System.out.println("    ____________________________________________________________");
-                System.out.println("    " + clone);
+                for(int i=0;i<(EntryList.size()-1);i++){
+                    System.out.println("    " + (i+1) + ". " + EntryList.get(i));
+                }
+                System.out.println("    ____________________________________________________________");
+            }
+
+            else if(!clone.equals("bye"))
+            {
+                System.out.println("    ____________________________________________________________");
+                System.out.println("    added: " + clone);
                 System.out.println("    ____________________________________________________________");
             }
             else
