@@ -18,24 +18,43 @@ public class Duke {
         System.out.println("    ____________________________________________________________");
         Scanner scanner;
         String clone = "";
+        String clone2 = "";
+        int clone_2;
+        String state = "✗";
 
         List<String> EntryList = new ArrayList<String>(); //create list
+        List<String> stateList = new ArrayList<String>(); //create list
+
+        scanner = new Scanner(System.in);
 
         while(!clone.equals("bye"))
         {
-            scanner = new Scanner(System.in);
-            clone = scanner.next();
-            EntryList.add(clone);
+            clone = scanner.next();// the cin equivalent for c++
+            if(!clone.equals("list") && !clone.equals("done"))
+            {
+                EntryList.add(clone);
+                stateList.add("✗");
+            }
 
-            if(clone.equals("list"))
+            if(clone.equals("done"))
+            {
+                System.out.println("1");
+                clone2 = scanner.next();
+                clone_2 = Integer.parseInt(clone2);
+                stateList.set((clone_2-1),"✓");
+                System.out.println("    ____________________________________________________________");
+                System.out.println("    Nice! I've marked this task as done: ");
+                System.out.println("    ["+ stateList.get(clone_2-1) + "] "+ EntryList.get(clone_2-1));
+                System.out.println("    ____________________________________________________________");
+            }
+            else if(clone.equals("list"))
             {
                 System.out.println("    ____________________________________________________________");
-                for(int i=0;i<(EntryList.size()-1);i++){
-                    System.out.println("    " + (i+1) + ". " + EntryList.get(i));
+                for(int i=0;i<EntryList.size();i++){
+                    System.out.println("    " + (i+1) + ".[" + stateList.get(i) + "] " + EntryList.get(i));
                 }
                 System.out.println("    ____________________________________________________________");
             }
-
             else if(!clone.equals("bye"))
             {
                 System.out.println("    ____________________________________________________________");
