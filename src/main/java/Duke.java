@@ -35,10 +35,9 @@ public class Duke {
             if(cinLine.equals("list")){
                 //method to print everything
                 for(int j=0;j<tasks.size();j++){
-                    System.out.println("    " + (j+1) + "." + tasks.get(j));// do not need .getName() and .showDoneStatus because of toString
+                    System.out.println("    " + (j+1) + "." + tasks.get(j));
                 }
             }
-
             else if(cinLine.equals("bye")){
 
             }
@@ -46,22 +45,13 @@ public class Duke {
             {
                 try{
                     String cinFirstWord = cinLine.substring(0,i);
-                    String cinLineLessFirstWord = cinLine.substring(i+1);//less SPACE
+                    String cinLineLessFirstWord = cinLine.substring(i+1);//lessmjND SPACE
 
 
 
                 if(cinFirstWord.equals("done")){
                     int number = Integer.parseInt(cinLineLessFirstWord);
                     tasks.get(number-1).setDone();
-                }
-                else if(cinFirstWord.equals("find")){
-                    for(int j=0;j<tasks.size();j++){
-                        String find = tasks.get(j).getName();   //very important
-                        int k = find.indexOf(cinLineLessFirstWord);
-                        if(k!=-1) {
-                            System.out.println("    " + (j + 1) + "." + tasks.get(j));
-                        }
-                    }
                 }
 
                 else if(cinFirstWord.equals("delete")){
@@ -76,7 +66,7 @@ public class Duke {
                     Task task = new Todo(cinLineLessFirstWord);
                     tasks.add(task);
                     System.out.println("Now you have " + tasks.size() + " task(s) in the list");
-                    //System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
+                    System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
 
                 }
                 else if(cinFirstWord.equals("deadline")) {
