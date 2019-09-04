@@ -64,6 +64,11 @@ public class Duke {
                     }
                 }
 
+                else if(cinFirstWord.equals("delete")){
+                    int number = Integer.parseInt(cinLineLessFirstWord);
+                    tasks.remove(number-1);
+                }
+
                 else if(cinFirstWord.equals("todo")) {
                     if(cinLineLessFirstWord.length()==0){
                         System.out.println("☹ OOPS!!! The description of a todo cannot be empty.");
