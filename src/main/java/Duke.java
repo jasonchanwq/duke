@@ -21,39 +21,54 @@ public class Duke {
     //main method
     public static void main(String[] args){
         Duke duke = new Duke();
+        //Ui ui = new Ui();
         duke.run();
     }
 
     private void run() {
-
+        Ui ui = new Ui();//try to move this up
+        Storage storage = new Storage();
+        Parser parser = new Parser();
+        TaskList taskList = new TaskList();
+        ui.showWelcome();
+        //storage.loadTask();
         Scanner s = new Scanner(System.in);
         String cinLine=" ";
         while(!cinLine.equals("bye")){
             cinLine = s.nextLine();
             int i = cinLine.indexOf(' ');//if (i==-1) or use if(i!=-1)
 
-            if(cinLine.equals("list")){
-                //method to print everything
-                for(int j=0;j<tasks.size();j++){
-                    System.out.println("    " + (j+1) + "." + tasks.get(j));// do not need .getName() and .showDoneStatus because of toString
+            if(i==-1)   //meaning the input consists of a single word
+            {
+                switch(cinLine){
+                    case "list":
+                        //method to print everything
+                        for(int j=0;j<tasks.size();j++){
+                            System.out.println("    " + (j+1) + "." + tasks.get(j));// do not need .getName() and .showDoneStatus because of toString
+                        }
+                        break;
+                    case "bye":
+                        System.out.println("Thank you for using duke!");
+                        break;
+                    default:
+                        ui.showUnknownCommand();
                 }
             }
 
-            else if(cinLine.equals("bye")){
-
-            }
-            else
+            else    //meaning the input consists of more than a word
             {
                 try{
-                    String cinFirstWord = cinLine.substring(0,i);
-                    String cinLineLessFirstWord = cinLine.substring(i+1);//less SPACE
-
+                    //String cinFirstWord = cinLine.substring(0,i);
+                    //String cinLineLessFirstWord = cinLine.substring(i+1);//less SPACE
+                    String cinFirstWord = parser.getFirstWord(cinLine);
+                    String cinLineLessFirstWord = parser.getCinLessFirstWord(cinLine);
 
 
                 if(cinFirstWord.equals("done")){
                     int number = Integer.parseInt(cinLineLessFirstWord);
                     tasks.get(number-1).setDone();
                 }
+
                 else if(cinFirstWord.equals("find")){
                     for(int j=0;j<tasks.size();j++){
                         String find = tasks.get(j).getName();   //very important
@@ -94,7 +109,7 @@ public class Duke {
                         System.out.println("Now you have " + tasks.size() + " task(s) in the list");
                     }
                     catch(StringIndexOutOfBoundsException ex){
-                        System.out.println("Sorry no /by detected for deadline!");
+                        ui.showNoDeadlineDetected();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -110,11 +125,11 @@ public class Duke {
                         System.out.println("Now you have " + tasks.size() + " task(s) in the list");
                     }
                     catch(StringIndexOutOfBoundsException ex){
-                        System.out.println("Sorry no /at detected for event!");
+                        ui.showNoEventDetected();
                     }
                 }
                 else{
-                    System.out.println( "☹ OOPS!!! I'm sorry, but I don't know what that means :-(");
+                    ui.showUnknownCommand();
                 }
                 }
                 catch (StringIndexOutOfBoundsException ex){
@@ -123,7 +138,9 @@ public class Duke {
 
             }
         }
+        storage.saveTask();
         /////////////////////////////////////////////////////////////////
+        /*
         try(FileWriter fileWriter = new FileWriter("duke.txt")) {
             //inherited method from java.io.Writer
             for(int j=0;j<tasks.size();j++) {
@@ -134,6 +151,8 @@ public class Duke {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        */
         /////////////////////////////////////////////////////////////////
     }
 }
