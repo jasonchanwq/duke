@@ -2,8 +2,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Storage extends Duke {//might be wrong need to edit this
@@ -45,15 +48,13 @@ public class Storage extends Duke {//might be wrong need to edit this
                         String cinDeadlineLessDate = cinLineLessFirstWord.substring(0,j-1);//less space
 
                         String sDate1=cinDeadline;
-                        Date date1=new SimpleDateFormat("dd/MM/yyyy hhmm").parse(sDate1);
-
+                        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hhmm", Locale.ENGLISH);
+                        LocalDateTime date1 = LocalDateTime.parse(sDate1, inputFormatter);
                         Task task = new Deadline(cinDeadlineLessDate,date1);
                         previousList.add(task);
                     }
                     catch(StringIndexOutOfBoundsException ex){
                         System.out.println("error");
-                    } catch (ParseException e) {
-                        e.printStackTrace();
                     }
                 } else if (cinFirstWord.equals("event")) {
                     int j = cinLineLessFirstWord.indexOf("/at");

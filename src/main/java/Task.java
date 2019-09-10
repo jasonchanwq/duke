@@ -1,15 +1,20 @@
+import javax.swing.text.DateFormatter;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 public abstract class Task {
     private String name;
     private boolean isDone;
+    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm", Locale.ENGLISH);
 
     /**
      * constuctor method
      */
-    public Task(String name){
+    Task(String name){
         this.name = name;   // this. refers to instance variable
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -17,11 +22,11 @@ public abstract class Task {
         this.name = name;
     }
 
-    public void setDone(){
+    void setDone(){
         this.isDone = true;
     }
 
-    public String showDoneStatus(){
+    String showDoneStatus(){
         return isDone?"✓":"✗";
     }
 }

@@ -3,10 +3,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Duke {
     //instance fields
@@ -103,16 +100,14 @@ public class Duke {
                         String cinDeadlineLessDate = cinLineLessFirstWord.substring(0,j-1);//less space
 
                         String sDate1=cinDeadline;
-                        Date date1=new SimpleDateFormat("dd/MM/yyyy hhmm").parse(sDate1);
-
+                        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm", Locale.ENGLISH);
+                        LocalDateTime date1 = LocalDateTime.parse(sDate1, inputFormatter);
                         Task task = new Deadline(cinDeadlineLessDate,date1);
                         tasks.add(task);
                         System.out.println("Now you have " + tasks.size() + " task(s) in the list");
                     }
                     catch(StringIndexOutOfBoundsException ex){
                         ui.showNoDeadlineDetected();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
                     }
                 }
                 else if(cinFirstWord.equals("event")) {
