@@ -11,9 +11,7 @@ class DeadlineTest {
     DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm", Locale.ENGLISH);
     LocalDateTime date1 = LocalDateTime.parse(sDate1, inputFormatter);
     private Deadline deadline = new Deadline("first deadline",date1);
-
-
-
+    
     @Test
     void testGetName() {
         assertEquals("first deadline", deadline.getName());
