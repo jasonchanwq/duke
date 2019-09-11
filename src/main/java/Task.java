@@ -1,7 +1,6 @@
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-
 public abstract class Task {
     protected String name;
     protected boolean isDone;

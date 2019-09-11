@@ -61,8 +61,11 @@ public class Storage extends Duke {//might be wrong need to edit this
 
                     String cinEvent = cinLineLessFirstWord.substring(j + 4);
                     String cinEventLessDate = cinLineLessFirstWord.substring(0, j - 1);//less space
+                    String sDate1=cinEvent;
+                    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm", Locale.ENGLISH);
+                    LocalDateTime date1 = LocalDateTime.parse(sDate1, inputFormatter);
 
-                    Task task = new Event(cinEventLessDate, cinEvent);
+                    Task task = new Event(cinEventLessDate, date1);
                     previousList.add(task);
                 }
             }

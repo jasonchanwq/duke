@@ -1,12 +1,14 @@
+import java.time.LocalDateTime;
+
 /**
  * Event represents a event-type Task
  * Event is a child of Task
  */
-
 public class Event extends Task {
 
-    String at;
-    public Event(String name, String time){
+    protected LocalDateTime at;
+
+    public Event(String name, LocalDateTime time){
         super(name);//super calls the parent class constructor
         this.at=time;
     }
@@ -15,8 +17,11 @@ public class Event extends Task {
      * Returns a string that represents the event timing when called
      * @return This returns the event timing
      */
-    public String getEventAt(){
+    public LocalDateTime getEventAt(){
         return at;
+    }
+    public String showEventAt() {
+        return getEventAt().format(outputFormatter);
     }
     /**
      * Returns a string that represents the object
@@ -24,6 +29,6 @@ public class Event extends Task {
      */
     @Override
     public String toString() {
-        return "[E]["+showDoneStatus()+"]"+ getName() + " (at: "+at+")";
+        return "[E]["+showDoneStatus()+"]"+ getName() + " (at: "+showEventAt()+")";
     }
 }

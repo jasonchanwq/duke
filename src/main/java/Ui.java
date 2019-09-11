@@ -1,7 +1,4 @@
 public class Ui {
-    // instance fields
-    String errorType;
-    // constructor method
 
     public Ui(){
     }
@@ -21,7 +18,7 @@ public class Ui {
         System.out.println("    What can I do for you?");
         System.out.println("    ____________________________________________________________");
     }
-
+    public void showListSize(int size){ System.out.println("Now you have " + size + " task(s) in the list");}
     /**
      * Prints error message for unknown command.
      */
@@ -39,6 +36,11 @@ public class Ui {
      */
     public void showNoEventDetected(){
         System.out.println("Sorry no /at detected for event!");
+    }
+
+    public void empty(String message){System.out.println("☹ OOPS!!! The description of a "+message+" cannot be empty.");}
+
+    public void showBye(){ System.out.println("Thank you for using duke!");
     }
 
 
