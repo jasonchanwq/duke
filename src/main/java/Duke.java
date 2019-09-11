@@ -1,13 +1,14 @@
-import java.io.FileWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+/**
+ * Duke.java
+ * @author Chan Wei Qiang Jason
+ */
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Duke {
     //instance fields
-    //test line for sourceTree
     String taskType;
     boolean checkbox;
     List<Task> tasks = new ArrayList<>(); //create list

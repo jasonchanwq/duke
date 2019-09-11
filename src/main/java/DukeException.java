@@ -1,5 +1,5 @@
 public class DukeException extends Exception {
-    //contructor
+    //constructor
     public DukeException(String message){
         super(message);
     }
