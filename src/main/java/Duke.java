@@ -8,14 +8,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Duke {
-    public Ui ui;
-    public TaskList task;
-
-    List<Task> tasks = new ArrayList<>(); //create list
+    protected Ui ui;
+    protected TaskList tasks;
 
     //constructor method
     public Duke(){
         ui = new Ui();
+        tasks = new TaskList();
     }
 
     //main method
@@ -27,7 +26,6 @@ public class Duke {
     private void run() {
         Storage storage = new Storage();
         Parser parser = new Parser();
-        TaskList taskList = new TaskList();
         ui.showWelcome();
         //storage.loadTask();
         Scanner s = new Scanner(System.in);
@@ -38,19 +36,7 @@ public class Duke {
 
             if(i==-1)   //meaning the input consists of a single word
             {
-                switch(cinLine){
-                    case "list":
-                        //method to print everything
-                        for(int j=0;j<tasks.size();j++){
-                            System.out.println("    " + (j+1) + "." + tasks.get(j));// do not need .getName() and .showDoneStatus because of toString
-                        }
-                        break;
-                    case "bye":
-                        ui.showBye();
-                        break;
-                    default:
-                        ui.showUnknownCommand();
-                }
+                singleWordEntered(cinLine);
             }
 
             else    //meaning the input consists of more than a word
@@ -65,21 +51,22 @@ public class Duke {
                     switch (cinFirstWord) {
                         case "done": {
                             int number = Integer.parseInt(cinLineLessFirstWord);
-                            tasks.get(number - 1).setDone();
+                            //TaskList.getTaskList(number - 1).setDone();
+                            tasks.doneTask(number);
                             break;
                         }
                         case "find":
-                            for (int j = 0; j < tasks.size(); j++) {
-                                String find = tasks.get(j).getName();   //very important
+                            for (int j = 0; j < tasks.getTaskListSize(); j++) {
+                                String find = tasks.getTaskName(j);   //very important
                                 int k = find.indexOf(cinLineLessFirstWord);
                                 if (k != -1) {
-                                    System.out.println("    " + (j + 1) + "." + tasks.get(j));
+                                    System.out.println("    " + (j + 1) + "." + tasks.getTask(j));
                                 }
                             }
                             break;
                         case "delete": {
                             int number = Integer.parseInt(cinLineLessFirstWord);
-                            tasks.remove(number - 1);
+                            tasks.deleteTask(number);
                             break;
                         }
                         case "todo":
@@ -87,8 +74,8 @@ public class Duke {
                                 ui.empty("todo");
                             } else {
                                 Task task = new Todo(cinLineLessFirstWord);
-                                tasks.add(task);
-                                ui.showListSize(tasks.size());
+                                tasks.addTask(task);
+                                ui.showListSize(tasks.getTaskListSize());
                             }
 
                             break;
@@ -105,8 +92,8 @@ public class Duke {
                                 DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm", Locale.ENGLISH);
                                 LocalDateTime date1 = LocalDateTime.parse(cinDeadline, inputFormatter);
                                 Task task = new Deadline(cinDeadlineLessDate, date1);
-                                tasks.add(task);
-                                ui.showListSize(tasks.size());
+                                tasks.addTask(task);
+                                ui.showListSize(tasks.getTaskListSize());
                             } catch (StringIndexOutOfBoundsException ex) {
                                 ui.showNoDeadlineDetected();
                             }
@@ -123,8 +110,8 @@ public class Duke {
                                 DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm", Locale.ENGLISH);
                                 LocalDateTime date1 = LocalDateTime.parse(cinEvent, inputFormatter);
                                 Task task = new Event(cinEventLessDate, date1);
-                                tasks.add(task);
-                                ui.showListSize(tasks.size());
+                                tasks.addTask(task);
+                                ui.showListSize(tasks.getTaskListSize());
                             } catch (StringIndexOutOfBoundsException ex) {
                                 ui.showNoEventDetected();
                             }
@@ -137,6 +124,22 @@ public class Duke {
             }
         }
         storage.saveTask();
+    }
+
+    public void singleWordEntered(String cinLine) {
+        switch(cinLine){
+            case "list":
+                //method to print everything
+                for(int j=0;j<tasks.getTaskListSize();j++){
+                    System.out.println("    " + (j+1) + "." + tasks.getTask(j));// do not need .getName() and .showDoneStatus because of toString
+                }
+                break;
+            case "bye":
+                ui.showBye();
+                break;
+            default:
+                ui.showUnknownCommand();
+        }
     }
 }
 

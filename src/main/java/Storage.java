@@ -17,8 +17,8 @@ public class Storage extends Duke {//might be wrong need to edit this
     public void saveTask() {
         try(FileWriter fileWriter = new FileWriter("duke.txt")) {
             //inherited method from java.io.Writer
-            for(int j=0;j<tasks.size();j++) {
-                fileWriter.write("    " + (j + 1) + "." + tasks.get(j));
+            for(int j=0;j<tasks.getTaskListSize();j++) {
+                fileWriter.write("    " + (j + 1) + "." + tasks.getTask(j));
                 fileWriter.write(System.lineSeparator()); //new line
             }
 
