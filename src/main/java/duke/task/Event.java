@@ -1,8 +1,10 @@
+package duke.task;
+
 import java.time.LocalDateTime;
 
 /**
- * Event represents a event-type Task
- * Event is a child of Task
+ * duke.task.Event represents a event-type duke.task.Task
+ * duke.task.Event is a child of duke.task.Task
  */
 public class Event extends Task {
 
