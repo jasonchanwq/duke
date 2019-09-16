@@ -1,11 +1,13 @@
+package duke.task;
+
 /**
- * Todo represents a todo-type Task
- * Todo is a child of Task
+ * duke.task.Todo represents a todo-type duke.task.Task
+ * duke.task.Todo is a child of duke.task.Task
  */
 
 public class Todo extends Task {
 
-    Todo(String name){
+    public Todo(String name){
         super(name);//super calls the parent class constructor
     }
 

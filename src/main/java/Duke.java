@@ -2,6 +2,13 @@
  * Duke.java
  * @author Chan Wei Qiang Jason
  */
+import duke.command.Command;
+import duke.exception.DukeException;
+import duke.parser.Parser;
+import duke.storage.Storage;
+import duke.task.TaskList;
+import duke.ui.Ui;
+
 import java.util.*;
 
 public class Duke {
@@ -31,10 +38,14 @@ public class Duke {
         String cinLine;
         boolean isExit = false;
         while(!isExit){
-            cinLine = s.nextLine();
-            int i = cinLine.indexOf(' ');//checks if the input is one word
-            parser.parseCommand(cinLine,tasks,ui,storage,i);
-            isExit=parser.getIsExit();
+            try {
+                cinLine = s.nextLine();
+                Command command = parser.parseCommand(cinLine, ui);
+                command.execute(tasks,ui,storage);
+                isExit=command.getIsExit();
+            } catch (DukeException e) {
+                //print error
+            }
         }
     }
 }

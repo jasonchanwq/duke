@@ -1,3 +1,5 @@
+package duke.ui;
+
 public class Ui {
 
     public Ui(){
@@ -23,7 +25,7 @@ public class Ui {
     }
     public void showListSize(int size){ System.out.println("Now you have " + size + " task(s) in the list");}
     /**
-     * Prints error message for unknown command.
+     * Prints error message for unknown duke.command.
      */
     public void showUnknownCommand(){ System.out.println( "☹ OOPS!!! I'm sorry, but I don't know what that means :-("); }
 

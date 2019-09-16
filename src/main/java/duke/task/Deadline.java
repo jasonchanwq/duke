@@ -1,8 +1,10 @@
+package duke.task;
+
 import java.time.LocalDateTime;
 
 /**
- * Deadline represents a deadline-type Task
- * Deadline is a child of Task
+ * duke.task.Deadline represents a deadline-type duke.task.Task
+ * duke.task.Deadline is a child of duke.task.Task
  */
 public class Deadline extends Task {
 
