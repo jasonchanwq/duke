@@ -1,46 +1,91 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
-public class Storage extends Duke {//might be wrong need to edit this
+public class Storage {
 
-    List<Task> previousList;
+    String filePath;
 
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
     // constructor
-    public void saveTask() {
-        try(FileWriter fileWriter = new FileWriter("duke.txt")) {
-            //inherited method from java.io.Writer
-            for(int j=0;j<tasks.getTaskListSize();j++) {
-                fileWriter.write("    " + (j + 1) + "." + tasks.getTask(j));
+    public void saveTaskList(ArrayList<Task> tasks) {
+
+        try(FileWriter fileWriter = new FileWriter(filePath)) {
+            for(int j=0;j<tasks.size();j++) {
+                fileWriter.write(tasks.get(j).toString());
                 fileWriter.write(System.lineSeparator()); //new line
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public List<Task> loadTask() {
-
-            Scanner scanner = new Scanner("duke.txt");
+    public ArrayList<Task> loadTaskList() throws DukeException {
+        ArrayList<Task> previousList = new ArrayList<>();
+        try {
+            Scanner scanner = new Scanner(new File(filePath));
             while (scanner.hasNext()) {
                 String cinLine = scanner.nextLine();
-                int i = cinLine.indexOf(' ');//if (i==-1) or use if(i!=-1)
-                String cinFirstWord = cinLine.substring(0, i);
-                String cinLineLessFirstWord = cinLine.substring(i + 1);//less SPACE
+
+                String[] arrOfStr = cinLine.split("]", 3);
+                String taskType = arrOfStr[0];
+                String taskDone = arrOfStr[1];
+                String taskName = arrOfStr[2];
 
 
-                if (cinFirstWord.equals("todo")) {
-                    Task task = new Todo(cinLineLessFirstWord);
+                if (taskType.equals("[T")) {
+                    Task task = new Todo(taskName);
+                    if (taskDone.equals("[✓")) {
+                        task.setDone();
+                    }
                     previousList.add(task);
-                } else if (cinFirstWord.equals("deadline")) {
+
+                }
+                else if (taskType.equals("[D")) {
+                    try {
+                        String[] arrOfStr2 = taskName.split(" \\(by: ", 2);
+                        String cinDeadline = arrOfStr2[1].substring(0,arrOfStr2[1].length()-1);
+                        String cinDeadlineLessDate = arrOfStr2[0];
+                        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm", Locale.ENGLISH);
+                        LocalDateTime date1 = LocalDateTime.parse(cinDeadline, inputFormatter);
+                        Task task = new Deadline(cinDeadlineLessDate, date1);
+                        if (taskDone.equals("[✓")) {
+                            task.setDone();
+                        }
+                        previousList.add(task);
+                    } catch (StringIndexOutOfBoundsException ex) {
+                        System.out.println("error");
+                    }
+                }
+                else if (taskType.equals("[E")) {
+                    try {
+                        String[] arrOfStr2 = taskName.split(" \\(at: ", 2);
+                        String cinEvent = arrOfStr2[1].substring(0,arrOfStr2[1].length()-1);
+                        String cinEventLessDate = arrOfStr2[0];
+                        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm", Locale.ENGLISH);
+                        LocalDateTime date1 = LocalDateTime.parse(cinEvent, inputFormatter);
+                        Task task = new Event(cinEventLessDate, date1);
+                        if (taskDone.equals("[✓")) {
+                            task.setDone();
+                        }
+                        previousList.add(task);
+                    }catch (StringIndexOutOfBoundsException ex) {
+                        System.out.println("error");
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new DukeException("File not found");
+        }
+            /* else if (cinFirstWord.equals("deadline")) {
                     int j = cinLineLessFirstWord.indexOf("/by");
 
                     try{
@@ -67,8 +112,8 @@ public class Storage extends Duke {//might be wrong need to edit this
 
                     Task task = new Event(cinEventLessDate, date1);
                     previousList.add(task);
-                }
-            }
+                }*/
+
             return previousList;
         }
     }

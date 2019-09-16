@@ -18,6 +18,9 @@ public class Ui {
         System.out.println("    What can I do for you?");
         System.out.println("    ____________________________________________________________");
     }
+    public void showLoadingError(){
+        System.out.println("No previous list detected!");
+    }
     public void showListSize(int size){ System.out.println("Now you have " + size + " task(s) in the list");}
     /**
      * Prints error message for unknown command.
