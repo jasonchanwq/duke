@@ -2,9 +2,6 @@
  * Duke.java
  * @author Chan Wei Qiang Jason
  */
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Duke {
@@ -31,12 +28,12 @@ public class Duke {
         Parser parser = new Parser();
         ui.showWelcome();
         Scanner s = new Scanner(System.in);
-        String cinLine=" ";
+        String cinLine;
         boolean isExit = false;
         while(!isExit){
             cinLine = s.nextLine();
-            int i = cinLine.indexOf(' ');//if (i==-1) or use if(i!=-1)
-            parser.command(cinLine,tasks,ui,storage,i);
+            int i = cinLine.indexOf(' ');//checks if the input is one word
+            parser.parseCommand(cinLine,tasks,ui,storage,i);
             isExit=parser.getIsExit();
         }
     }

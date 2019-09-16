@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -85,35 +82,6 @@ public class Storage {
         } catch (FileNotFoundException e) {
             throw new DukeException("File not found");
         }
-            /* else if (cinFirstWord.equals("deadline")) {
-                    int j = cinLineLessFirstWord.indexOf("/by");
-
-                    try{
-                        String cinDeadline = cinLineLessFirstWord.substring(j+4);
-                        String cinDeadlineLessDate = cinLineLessFirstWord.substring(0,j-1);//less space
-
-                        String sDate1=cinDeadline;
-                        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hhmm", Locale.ENGLISH);
-                        LocalDateTime date1 = LocalDateTime.parse(sDate1, inputFormatter);
-                        Task task = new Deadline(cinDeadlineLessDate,date1);
-                        previousList.add(task);
-                    }
-                    catch(StringIndexOutOfBoundsException ex){
-                        System.out.println("error");
-                    }
-                } else if (cinFirstWord.equals("event")) {
-                    int j = cinLineLessFirstWord.indexOf("/at");
-
-                    String cinEvent = cinLineLessFirstWord.substring(j + 4);
-                    String cinEventLessDate = cinLineLessFirstWord.substring(0, j - 1);//less space
-                    String sDate1=cinEvent;
-                    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HHmm", Locale.ENGLISH);
-                    LocalDateTime date1 = LocalDateTime.parse(sDate1, inputFormatter);
-
-                    Task task = new Event(cinEventLessDate, date1);
-                    previousList.add(task);
-                }*/
-
             return previousList;
         }
     }

@@ -11,7 +11,7 @@ public class Parser {
         return isExit;
     }
 
-    public void command (String commandType, TaskList tasks, Ui ui, Storage storage, int i){
+    public void parseCommand(String commandType, TaskList tasks, Ui ui, Storage storage, int i){
         if(i==-1) {
             switch (commandType) {
                 case "list":
@@ -36,8 +36,12 @@ public class Parser {
 
             switch (cinFirstWord) {
                 case "done": {
-                    int number = Integer.parseInt(cinLineLessFirstWord);
-                    tasks.doneTask(number);
+                    Command command = new DoneCommand();
+                    command.execute(commandType,tasks,ui,storage,i);
+
+//                    int number = Integer.parseInt(cinLineLessFirstWord);
+//                    tasks.doneTask(number);
+
                     break;
                 }
                 case "find":
